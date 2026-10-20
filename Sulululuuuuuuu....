@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Little Surprise 🎁</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffd6e7, #d9e7ff);
+}
+
+/* Main screen */
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    color: #333;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #555;
+    margin-bottom: 45px;
+}
+
+/* Gift */
+.gift {
+    width: 180px;
+    height: 150px;
+    position: relative;
+    margin: auto;
+    cursor: pointer;
+    animation: float 2s ease-in-out infinite;
+}
+
+.box {
+    position: absolute;
+    width: 180px;
+    height: 115px;
+    bottom: 0;
+    background: #ff4f81;
+    border-radius: 8px;
+    box-shadow: 0 15px 30px rgba(0,0,0,.2);
+}
+
+.box::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 115px;
+    left: 72px;
+    background: #ffd43b;
+}
+
+.lid {
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    left: -10px;
+    top: 15px;
+    background: #ff3d73;
+    border-radius: 8px;
+    transition: .8s;
+    z-index: 3;
+    box-shadow: 0 8px 15px rgba(0,0,0,.15);
+}
+
+.lid::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 40px;
+    left: 82px;
+    background: #ffd43b;
+}
+
+.ribbon {
+    position: absolute;
+    width: 35px;
+    height: 150px;
+    left: 72px;
+    background: #ffd43b;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.bow {
+    position: absolute;
+    top: -10px;
+    left: 70px;
+    z-index: 5;
+}
+
+.bow span {
+    display: inline-block;
+    width: 45px;
+    height: 30px;
+    background: #ffd43b;
+    border-radius: 50%;
+    transform: rotate(30deg);
+}
+
+.bow span:last-child {
+    transform: rotate(-30deg);
+}
+
+/* Opening animation */
+.gift.open .lid {
+    transform: translateY(-90px) rotate(-8deg);
+}
+
+.gift.open {
+    animation: none;
+}
+
+/* Message */
+.message {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(20,20,30,.96);
+    opacity: 0;
+    visibility: hidden;
+    transition: .6s;
+    z-index: 10;
+    text-align: center;
+    padding: 20px;
+}
+
+.message.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.small {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.prank {
+    color: #ffd43b;
+    font-size: clamp(35px, 9vw, 75px);
+    font-weight: 900;
+    text-transform: uppercase;
+    animation: shake .5s infinite;
+    text-shadow: 0 0 20px rgba(255,212,59,.5);
+}
+
+.emoji {
+    font-size: 55px;
+    margin-top: 25px;
+}
+
+button {
+    margin-top: 35px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #222;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Animations */
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes shake {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(-2deg) scale(1.02); }
+    50% { transform: rotate(2deg) scale(1.02); }
+    75% { transform: rotate(-2deg); }
+    100% { transform: rotate(0); }
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -20px;
+    animation: fall 3s linear forwards;
+    z-index: 20;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="home">
+
+    <h1>🎁 A Little Surprise For You</h1>
+
+    <p class="subtitle">
+        I made something special...<br>
+        Tap the gift to open it ❤️
+    </p>
+
+    <div class="gift" id="gift" onclick="openGift()">
+
+        <div class="bow">
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="lid"></div>
+
+        <div class="ribbon"></div>
+
+        <div class="box"></div>
+
+    </div>
+
+</div>
+
+<!-- Prank reveal -->
+<div class="message" id="message">
+
+    <div class="small">
+        🎉 CONGRATULATIONS 🎉
+    </div>
+
+    <div class="prank">
+        BARTAN DHO LE<br>
+        4 FOOTIYA 😭😂
+    </div>
+
+    <div class="emoji">
+        🧽🍽️🫧
+    </div>
+
+    <button onclick="location.reload()">
+        Dobara Gift Dekh 😂
+    </button>
+
+</div>
+
+<script>
+
+function openGift() {
+
+    const gift = document.getElementById("gift");
+    const message = document.getElementById("message");
+
+    gift.classList.add("open");
+
+    // Wait for lid animation
+    setTimeout(() => {
+        message.classList.add("show");
+        createConfetti();
+    }, 800);
+}
+
+function createConfetti() {
+
+    for (let i = 0; i < 80; i++) {
+
+        const confetti = document.createElement("div");
+
+        confetti.className = "confetti";
+
+        confetti.style.left =
+            Math.random() * 100 + "vw";
+
+        confetti.style.background =
+            ["#ff4f81","#ffd43b","#4dabf7","#69db7c","#da77f2"]
+            [Math.floor(Math.random() * 5)];
+
+        confetti.style.animationDuration =
+            (2 + Math.random() * 2) + "s";
+
+        confetti.style.animationDelay =
+            Math.random() * 1 + "s";
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+            confetti.remove();
+        }, 5000);
+    }
+}
+
+</script>
+
+</body>
+</html>
